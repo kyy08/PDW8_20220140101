@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TourCampNou</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to TourCampNou</h1>
+    </header>
+
+    <section id="image">
+        <h2>Camp Nou Stadium</h2>
+        <img src="assets/fc-barcelona.jpg" alt="Camp Nou Stadium">
+    </section>
+
+    <section id="booking">
+        <h2>Booking Form</h2>
+        <form id="booking-form">
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <p>Select Tour Package:</p>
+                <input type="radio" id="tour-basic" name="tour-package" value="basic">
+                <label for="tour-basic">Basic Tour</label><br>
+                <input type="radio" id="tour-premium" name="tour-package" value="premium">
+                <label for="tour-premium">Premium Tour</label><br>
+            </div>
+            <div>
+                <p>Additional Services:</p>
+                <input type="checkbox" id="audio-guide" name="additional-service" value="audio-guide">
+                <label for="audio-guide">Audio Guide</label><br>
+                <input type="checkbox" id="souvenir" name="additional-service" value="souvenir">
+                <label for="souvenir">Souvenir</label><br>
+            </div>
+            <div>
+                <button type="submit" id="submit-btn">Submit</button>
+                <button type="reset">Reset</button>
+            </div>
+        </form>
+    </section>
+
+    <section id="confirmation">
+        <h2>Confirmation</h2>
+        <div id="confirmation-message"></div>
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.getElementById("booking-form");
+            const confirmationSection = document.getElementById("confirmation");
+            const confirmationMessage = document.getElementById("confirmation-message");
+
+            form.addEventListener("submit", function(event) {
+                event.preventDefault();
+
+                const formData = new FormData(form);
+                const name = formData.get("name");
+                const email = formData.get("email");
+                const tourPackage = formData.get("tour-package");
+                const additionalServices = formData.getAll("additional-service");
+
+                const message = `
+                    <p>Thank you, ${name}, for booking a ${tourPackage} tour at TourCampNou.</p>
+                    <p>We will send a confirmation email to ${email} shortly.</p>
+                    <p>Additional Services: ${additionalServices.join(", ")}</p>
+                `;
+
+                confirmationMessage.innerHTML = message;
+                confirmationSection.style.display = "block";
+            });
+
+            const resetButton = document.getElementById("reset-btn");
+            resetButton.addEventListener("click", function() {
+                confirmationSection.style.display = "none";
+            });
+        });
+    </script>
+</body>
+</html>
+
